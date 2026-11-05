@@ -1,0 +1,390 @@
+@import "tailwindcss";
+
+/*
+ * Propuesta creativa v3 (docs/03 - Decisiones/Propuesta creativa v3.md).
+ * Espresso cálido de fondo, durazno para titulares, dorado de marca para la acción.
+ * Titulares en Big Shoulders (condensada), texto en Fraunces, LOGGER para sabores y sellos.
+ */
+@theme {
+  --color-tinta: #010101;
+  --color-noche: #130c08;
+  --color-espresso: #22160f;
+  --color-tostado: #3a271b;
+  --color-cafe: #5a3b26;
+  --color-dorado: #e1b75d;
+  --color-dorado-claro: #f0d79c;
+  --color-durazno: #efd6bf;
+  --color-crema: #f5ece2;
+  --color-suave: #c2ab98;
+  --color-papel: #efdcc8;
+  --color-musgo: #13201a;
+  --color-brote: #d9e7b5;
+  --color-anis: #8c1c21;
+  --color-campesino: #6a3e22;
+  --color-cardamomo: #1d5038;
+  --color-jengibre: #c38c37;
+
+  --font-titular: var(--font-big-shoulders), "Arial Narrow", sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-logger: var(--font-logger-local), var(--font-fraunces), serif;
+
+  --text-mega: clamp(4.2rem, 10.5vw, 11rem);
+  --text-mega--line-height: 0.84;
+  --text-titulo: clamp(3rem, 6.4vw, 7rem);
+  --text-titulo--line-height: 0.88;
+  --text-subtitulo: clamp(2rem, 3.4vw, 3.6rem);
+  --text-subtitulo--line-height: 0.95;
+  --text-frase: clamp(1.35rem, 1.9vw, 1.9rem);
+  --text-frase--line-height: 1.25;
+  --text-cuerpo: 1.0625rem;
+  --text-cuerpo--line-height: 1.6;
+  --text-nota: 0.875rem;
+  --text-nota--line-height: 1.45;
+
+  --ease-salto: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-cafe: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-espresso);
+    color-scheme: dark;
+  }
+  body {
+    font-family: var(--font-display);
+    font-size: var(--text-cuerpo);
+    line-height: var(--text-cuerpo--line-height);
+    font-weight: 360;
+    font-variation-settings: "SOFT" 50, "WONK" 0;
+    color: var(--color-crema);
+    background: var(--color-espresso);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-dorado);
+    color: var(--color-tinta);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-dorado);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .marco {
+    width: 100%;
+    padding-inline: clamp(1rem, 2.2vw, 2.25rem);
+  }
+
+  /* Titular condensado; las palabras pequeñas (.menor) bajan de tamaño y peso, como en un cartel */
+  .titular {
+    font-family: var(--font-titular);
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--color-durazno);
+  }
+  .titular .menor {
+    font-weight: 400;
+    font-size: 0.52em;
+    letter-spacing: 0;
+    vertical-align: 0.42em;
+    margin-inline: 0.12em;
+  }
+
+  /*
+   * Botón de la página: píldora de trazo fino con la flecha dentro, en su propio círculo.
+   * Al pasar el ratón se llena de café desde abajo (una ola), el texto se invierte y la flecha gira.
+   * `.pildora-llena` parte llena (acción principal).
+   */
+  .pildora {
+    --tinta-p: var(--color-durazno);
+    --fondo-p: var(--color-dorado);
+    --texto-lleno: var(--color-tinta);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    height: 3.25rem;
+    padding: 0 0.4rem 0 1.5rem;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--tinta-p) 55%, transparent);
+    color: var(--tinta-p);
+    font-family: var(--font-titular);
+    font-weight: 650;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition:
+      color 0.45s var(--ease-cafe),
+      box-shadow 0.45s,
+      transform 0.5s var(--ease-salto);
+  }
+  .pildora::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10% -10%;
+    z-index: -1;
+    background:
+      radial-gradient(60% 22px at 25% 0, transparent 70%, var(--fondo-p) 72%) 0 0 / 50% 30px repeat-x,
+      linear-gradient(var(--fondo-p), var(--fondo-p)) 0 14px / 100% 100% no-repeat;
+    transform: translateY(102%);
+    transition: transform 0.6s var(--ease-cafe);
+  }
+  .pildora > span:last-child {
+    display: grid;
+    place-items: center;
+    width: 2.45rem;
+    height: 2.45rem;
+    flex: none;
+    border-radius: 999px;
+    background: var(--tinta-p);
+    color: var(--color-espresso);
+    font-family: var(--font-display);
+    letter-spacing: 0;
+    transition:
+      transform 0.55s var(--ease-salto),
+      background-color 0.45s,
+      color 0.45s;
+  }
+  .pildora:hover,
+  .pildora:focus-visible {
+    color: var(--texto-lleno);
+    box-shadow: inset 0 0 0 1.5px var(--fondo-p);
+  }
+  .pildora:hover::before,
+  .pildora:focus-visible::before {
+    transform: translateY(0);
+  }
+  .pildora:hover > span:last-child,
+  .pildora:focus-visible > span:last-child {
+    transform: rotate(-45deg);
+    background: var(--color-tinta);
+    color: var(--fondo-p);
+  }
+  .pildora:active {
+    transform: scale(0.97);
+  }
+  .pildora-llena {
+    background: var(--color-durazno);
+    color: var(--color-espresso);
+    box-shadow: none;
+  }
+  .pildora-llena > span:last-child {
+    background: var(--color-espresso);
+    color: var(--color-durazno);
+  }
+  /* Sobre fondos claros */
+  .pildora-oscura {
+    --tinta-p: var(--color-espresso);
+    --fondo-p: var(--color-espresso);
+    --texto-lleno: var(--color-durazno);
+  }
+  .pildora-oscura > span:last-child {
+    color: var(--color-durazno);
+  }
+  .pildora-oscura:hover > span:last-child {
+    background: var(--color-durazno);
+    color: var(--color-espresso);
+  }
+
+  .enlace {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition:
+      color 0.3s,
+      text-underline-offset 0.3s;
+  }
+  .enlace:hover {
+    color: var(--color-dorado);
+    text-underline-offset: 0.34em;
+  }
+}
+
+/* ─── Intro: solo la primera visita de la sesión ─── */
+html[data-intro="si"] {
+  overflow: hidden;
+}
+html[data-intro="no"] .intro:not([data-activa]) {
+  display: none;
+}
+.intro [data-cargando] {
+  opacity: 0;
+}
+
+/* Revelado por partes: oculto solo con JS y movimiento permitido (clase `mov`, antes del primer pintado) */
+html.mov [data-revelar] {
+  opacity: 0;
+}
+
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes vaporBoton {
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-2px) scaleY(0.82);
+    opacity: 0.55;
+  }
+}
+@keyframes cinta {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes vapor {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.85;
+  }
+  100% {
+    stroke-dashoffset: -120;
+    opacity: 0;
+  }
+}
+.vapor path {
+  stroke-dasharray: 40 80;
+  animation: vapor 4.3s ease-in-out infinite;
+}
+.vapor path:nth-child(2) {
+  animation-duration: 5.1s;
+  animation-delay: -1.7s;
+}
+.vapor path:nth-child(3) {
+  animation-duration: 4.7s;
+  animation-delay: -3.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes ola {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes llenar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes girar {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes flotar {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-1.5deg);
+  }
+}
+
+@keyframes caer {
+  from {
+    opacity: 0;
+    transform: translateY(-60%) rotate(-12deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes llegar {
+  from {
+    opacity: 0;
+    transform: translateX(40%) rotate(14deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rebote {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.4) rotate(-12deg);
+  }
+  70% {
+    transform: scale(0.9) rotate(6deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mota {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate3d(8px, -26px, 0);
+    opacity: 0.9;
+  }
+}
+@keyframes orbita {
+  from {
+    transform: rotate(0deg) translateX(150px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(150px) rotate(-360deg);
+  }
+}
+
+@keyframes respirar {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+}

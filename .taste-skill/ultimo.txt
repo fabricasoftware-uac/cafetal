@@ -1,0 +1,50 @@
+TASTESKILL · INSPECT   http://localhost:3311/?intro=no
+
+MEASURED (first viewport listed)
+  hero headline   "Tu taza"  2 words · 1 line(s) · 96px (6.7vw) · Fraunces 360 · tracking 0em · leading 1
+  @768px          1 line(s) · 61.4px
+  @390px          1 line(s) · 56px
+  typefaces       Fraunces 96%, logger 4%
+  sizes in use    14 / 18 / 32 / 36 / 95 / 96 / 245 px   body 18px / 1.38
+  colour          page #0d0a08 · sections #e1b75d · button #1a130e
+  page            22.3 screens · 416 words · 19 images · hero media 100% img
+  headings        31 · longest 4 line(s) · median 2 words
+
+FAIL — fix every one of these
+  [blank-gap] @1440px (+768, 390)  2 stretch(es) of the page hold nothing at all: 552px at 17432px; 436px at 11476px (the screen is 900px tall).
+      → Close the gap: a section gap is 120–240px on desktop and 72–112px on a phone. Look for a min-height: 100vh on a short section, an empty grid row, a hidden element still holding its space, or a reveal that never fired. A deliberate rest is a placed picture or colour field, not nothing.
+  [covered-text] @1440px (+768)  Large text lies under another element at some scroll position: "Tostado y molido 20 sachets de 5 gramos Listo en" (screen 1, 42% hidden); "COLOCA" (screen 11, 25% hidden); "VIERTE" (screen 12, 25% hidden)
+      → Nothing may sit on top of a headline or statement. Move the picture, shorten the pinned run, or raise the text above it (z-index) and give it a ground.
+
+WARN — fix, or be able to defend
+  [statement-length] @1440px (+390)  1 large-set statement(s) run past 3 lines at 1440px: "CaFETAL Group nació en Pitalito, Huila. …" → 4 lines at 36px
+      → A statement set large is about 30 words. Cut it, or set the rest as ordinary body text.
+  [mixed-font-headline] @1440px (+390)  2 headline(s) switch typeface or to italic mid-line (the "one italic serif word" move).
+      → Set the whole headline in one face. Emphasis comes from the words.
+  [no-footage] @1440px  No video anywhere on the page.
+      → Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject.
+  [ragged-edges] @1440px  Left-aligned text starts at 9 different lines (46px, 66px, 275px, 356px, 1077px, 423px, 445px); the three most used hold only 53% of it.
+      → Pick two or three anchor lines from the grid and start every heading and paragraph on one of them.
+  [pinned-over-picture] @1440px (+768, 390)  Pinned large text slides across pictures while the page scrolls: "CAFE ´ É DE" (screen 1, 100% over a picture); "PITALITO" (screen 1, 100% over a picture); "HUILA" (screen 1, 100% over a picture)
+      → Jurors read a pinned title crossing drawings or photographs as a collision. Keep the pictures in the column the title does not occupy, or unpin it.
+  [long-pin] @1440px  The same large text stays on screen for 6 screens in a row: "Nuestra historia"; "Del cafetal a tu taza, el grano nunca pierde su origen."
+      → A pinned element earns two screens, and something must change at each. Shorten the run or give every screen its own content.
+  [small-title] @768px  The h1 is 24px ("CAFE ´ É DE PITALITO HUILA").
+      → Set the title at display size, or make the large text of the first screen the h1.
+  [size-count] @390px  10 different font sizes (14, 18, 20, 24, 32, 35, 39, 48, 56, 86).
+      → A page needs about five: display, heading, lead, body, small.
+
+LOOK AT THE RENDER — open these with your image viewer / Read tool before saying anything about quality:
+  desktop 1440px  .taste-skill/inspect/desktop-fold.jpg
+                  .taste-skill/inspect/desktop-page-01.jpg
+                  .taste-skill/inspect/desktop-page-02.jpg
+                  .taste-skill/inspect/desktop-page-03.jpg
+  tablet 768px    .taste-skill/inspect/tablet-fold.jpg
+                  .taste-skill/inspect/tablet-page-01.jpg
+                  .taste-skill/inspect/tablet-page-02.jpg
+  mobile 390px    .taste-skill/inspect/mobile-fold.jpg
+                  .taste-skill/inspect/mobile-page-01.jpg
+                  .taste-skill/inspect/mobile-page-02.jpg
+
+report: .taste-skill/inspect/report.json
+RESULT: 2 FAIL, 8 WARN — not done.
