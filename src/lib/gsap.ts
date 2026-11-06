@@ -8,7 +8,7 @@ import { Physics2DPlugin } from 'gsap/Physics2DPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 
-// Registro único de plugins: hacerlo por componente produce avisos y fallos con Fast Refresh.
+// Registro único de plugins: hacerlo por componente produce avisos y fallos con Fast Refresh. deploy
 gsap.registerPlugin(ScrollTrigger, SplitText, Physics2DPlugin, DrawSVGPlugin, MotionPathPlugin, useGSAP)
 
 export { gsap, ScrollTrigger, SplitText, useGSAP }
